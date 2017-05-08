@@ -1,0 +1,27 @@
+nameko:
+  build: .
+  links:
+    - amqp
+    - runner
+  command: nameko shell --broker pyamqp://guest:guest@amqp:5672/nameko
+
+test:
+  build: .
+  links:
+    - amqp
+  command: py.test --amqp-uri pyamqp://guest:guest@amqp:5672 --rabbit-api-uri http://guest:guest@amqp:15672 tests.py
+
+amqp:
+  image: rabbitmq:3.5-management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  environment:
+    RABBITMQ_NODENAME: nameko
+    RABBITMQ_DEFAULT_VHOST: nameko
+
+runner:
+  build: .
+  links:
+    - amqp
+  command: nameko run service --broker pyamqp://guest:guest@amqp:5672/nameko
