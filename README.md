@@ -4,8 +4,7 @@ This project serves as an example of how eventlet greenthreads can work either
 cooperatively or blocking.
 
 ```
-$ docker-compose build
-$ docker-compose run nameko
+$ make shell
 >>> # Make both calls asynchronously to prevent needing to open up a new shell
 >>> n.rpc.primes.cooperative.call_async(10**7, 10**7 + 100)
 >>> n.rpc.primes.blocking.call_async(10**7, 10**7 + 100)

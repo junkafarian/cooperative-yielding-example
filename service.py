@@ -8,6 +8,8 @@ from nameko.rpc import rpc
 _log = logging.getLogger(__name__)
 
 
+# Dependencies
+
 class PrimeChecker(DependencyProvider):
 
     def is_prime(self, number):
@@ -49,6 +51,8 @@ class EntrypointLogger(DependencyProvider):
         )
 
 
+# Service
+
 class PrimeService:
     name = "primes"
 
@@ -79,5 +83,5 @@ class PrimeService:
             _log.info('Cooperatively yielding')
             eventlet.sleep()
 
-        _log.info('completed cooperative calc')
+        _log.info('Completed cooperative calc')
         return result
