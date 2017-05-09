@@ -28,9 +28,11 @@ class EntrypointLogger(DependencyProvider):
         self.entrypoint_starts = weakref.WeakKeyDictionary()
 
     def worker_setup(self, worker_ctx):
+        _log.info('Starting execution of {}'.format(worker_ctx.entrypoint))
         self.entrypoint_starts[worker_ctx] = time.perf_counter()
 
     def worker_result(self, worker_ctx, result=None, exc_info=None):
+        _log.info('Completed execution of {}'.format(worker_ctx.entrypoint))
         if not result:
             return
 
@@ -61,16 +63,13 @@ class PrimeService:
 
     @rpc
     def blocking(self, start, stop):
-        _log.info('Starting blocking calc')
         result = [
             x for x in range(start, stop + 1) if self.is_prime(x)
         ]
-        _log.info('Completed blocking calc')
         return result
 
     @rpc
     def cooperative(self, start, stop):
-        _log.info('Starting cooperative calc')
         result = []
 
         for x in range(start, stop + 1):
@@ -83,5 +82,4 @@ class PrimeService:
             _log.info('Cooperatively yielding')
             eventlet.sleep()
 
-        _log.info('Completed cooperative calc')
         return result
