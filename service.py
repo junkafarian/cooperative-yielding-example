@@ -76,9 +76,6 @@ class PrimeService:
             if self.is_prime(x):
                 result.append(x)
 
-            # Indicate that eventlet can yeild control to another greenthread.
-            # If there is no contention, processing will resume in this thread
-            # immediately.
             _log.info('Cooperatively yielding')
             eventlet.sleep()
 
