@@ -63,9 +63,12 @@ class PrimeService:
 
     @rpc
     def blocking(self, start, stop):
-        result = [
-            x for x in range(start, stop + 1) if self.is_prime(x)
-        ]
+        result = []
+
+        for x in range(start, stop + 1):
+            if self.is_prime(x):
+                result.append(x)
+
         return result
 
     @rpc
