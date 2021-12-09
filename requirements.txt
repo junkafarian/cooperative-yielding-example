@@ -1,2 +1,2 @@
-nameko==2.6.0
+nameko==2.14.0
 pytest==3.0.7
